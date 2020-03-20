@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lost&amp;FoundKFU</string>
+    <string name="lostfound">потеря/находка</string>
+    <string name="lost_list">лист потерь</string>
+    <string name="find_list">лист находок</string>
+    <string name="profile">профиль</string>
+    <integer name="com_vk_sdk_AppId">7355851</integer>
+</resources>

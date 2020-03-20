@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "457887130361",
+    "firebase_url": "https://lostandfoundkfu.firebaseio.com",
+    "project_id": "lostandfoundkfu",
+    "storage_bucket": "lostandfoundkfu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457887130361:android:7831502687df2f30547828",
+        "android_client_info": {
+          "package_name": "com.example.lostfoundkfu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457887130361-bp25909f3llvksu6gs0pbkek6euiv4as.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFz9holk97j1i_MbjldCoCSq_UmkvGxG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457887130361-bp25909f3llvksu6gs0pbkek6euiv4as.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
