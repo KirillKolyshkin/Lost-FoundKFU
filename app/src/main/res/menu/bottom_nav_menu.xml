@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_debtors"
+        android:id="@+id/action_lost_and_found"
         android:icon="@drawable/ic_question"
         android:title="@string/lostfound"/>
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/action_found_list"
         android:icon="@drawable/ic_search"
         android:title="@string/lost_list" />
     <item
-        android:id="@+id/action_party_list"
+        android:id="@+id/action_lost_list"
         android:icon="@drawable/ic_bag"
         android:title="@string/find_list" />
 

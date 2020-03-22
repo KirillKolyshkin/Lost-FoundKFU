@@ -4,5 +4,6 @@
     <string name="lost_list">лист потерь</string>
     <string name="find_list">лист находок</string>
     <string name="profile">профиль</string>
+    <string name="LostAndFoundTitle">Находки и Потери КФУ</string>
     <integer name="com_vk_sdk_AppId">7355851</integer>
 </resources>
