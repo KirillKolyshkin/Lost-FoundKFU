@@ -8,4 +8,5 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {
     fun loginComponent(): LoginComponent.Builder
+    fun mainActivityComponent(): MainActivityComponent.Builder
 }
