@@ -1,4 +1,4 @@
-package com.example.lostfoundkfu.features.lostlist
+package com.example.lostfoundkfu.features.foundlist
 
 import android.os.Bundle
 import android.view.*
@@ -13,21 +13,21 @@ import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.Items.LostItem
 import com.example.lostfoundkfu.features.App
 import com.example.lostfoundkfu.features.mainscreen.MainActivity
-import kotlinx.android.synthetic.main.lost_item_list_fragment.*
+import kotlinx.android.synthetic.main.found_item_list_fragment.*
 import javax.inject.Inject
 
-class LostListFragment: MvpAppCompatFragment(),
-    LostListView,
+class FoundListFragment: MvpAppCompatFragment(),
+    FoundListView,
     SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     @InjectPresenter
-    lateinit var lostItemListPresenter: LostListPresenter
+    lateinit var foundItemListPresenter: FoundListPresenter
 
     @ProvidePresenter
-    fun initPresenter() = lostItemListPresenter
+    fun initPresenter() = foundItemListPresenter
 
-    private val lostItemListAdapter = LostListAdapter { onItemClick(it) }
+    private val foundItemListAdapter = FoundListAdapter { onItemClick(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.instance
@@ -40,7 +40,7 @@ class LostListFragment: MvpAppCompatFragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.lost_item_list_fragment, container, false)
+        return inflater.inflate(R.layout.found_item_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,10 +50,10 @@ class LostListFragment: MvpAppCompatFragment(),
                 this.context, resources.configuration.orientation
             )
         )
-        lostItemListPresenter.getLostList()
-        recycler_view.adapter = lostItemListAdapter
+        foundItemListPresenter.getFoundList()
+        recycler_view.adapter = foundItemListAdapter
         recycler_view.layoutManager = LinearLayoutManager(context)
-        lostItemListPresenter.setLostList()
+        foundItemListPresenter.setFoundList()
         swipe_container.setColorSchemeResources(R.color.colorAccent)
         swipe_container.setOnRefreshListener(this)
         initToolbar()
@@ -66,7 +66,7 @@ class LostListFragment: MvpAppCompatFragment(),
     private fun initToolbar() {
         val activity = (activity as MainActivity)
         activity.setSupportActionBar(toolbar)
-        toolbar.title = "Лист Потерь"
+        toolbar.title = "Лист Находок"
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -88,26 +88,26 @@ class LostListFragment: MvpAppCompatFragment(),
     }
 
     fun getFilterList(textQuery: String) =
-        showLostList(ArrayList(dataList.filter { it.name.contains(textQuery) }))
+        showFoundList(ArrayList(dataList.filter { it.name.contains(textQuery) }))
 
     override fun onRefresh() {
-        lostItemListPresenter.setLostList()
+        foundItemListPresenter.setFoundList()
     }
 
-    override fun showLostList(dataList: ArrayList<LostItem>) {
-        lostItemListAdapter.list = dataList
-        lostItemListAdapter.notifyDataSetChanged()
+    override fun showFoundList(dataList: ArrayList<LostItem>) {
+        foundItemListAdapter.list = dataList
+        foundItemListAdapter.notifyDataSetChanged()
         swipe_container.isRefreshing = false
     }
 
-    override fun getLostList(items: ArrayList<LostItem>) {
+    override fun getFoundList(items: ArrayList<LostItem>) {
         dataList = items
     }
 
     companion object {
         var localMenu: Menu? = null
         var dataList = ArrayList<LostItem>()
-        fun newInstance(): LostListFragment =
-            LostListFragment()
+        fun newInstance(): FoundListFragment =
+            FoundListFragment()
     }
 }

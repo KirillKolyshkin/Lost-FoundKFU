@@ -16,4 +16,13 @@ class DBProvider {
             emitter.onSuccess(list)
         }
 
+
+    fun getTestFoundList(): Maybe<ArrayList<LostItem>> =
+        Maybe.create { emitter ->
+            val list = ArrayList<LostItem>()
+            for (i in 1..20) {
+                list.add(LostItem("Пельмеши", "2йка", Calendar.getInstance().time, null, true))
+            }
+            emitter.onSuccess(list)
+        }
 }

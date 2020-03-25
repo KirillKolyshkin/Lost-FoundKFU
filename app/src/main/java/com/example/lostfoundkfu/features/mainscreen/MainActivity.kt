@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lostfoundkfu.R
+import com.example.lostfoundkfu.features.foundlist.FoundListFragment
 import com.example.lostfoundkfu.features.lostandfoundselect.LostAndFoundSelectFragment
 import com.example.lostfoundkfu.features.lostlist.LostListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private val lostAndFoundFragment = LostAndFoundSelectFragment.newInstance()
     private val lostListFragment = LostListFragment.newInstance()
+    private val foundListFragment = FoundListFragment.newInstance()
 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -32,10 +34,10 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.action_found_list -> {
-//                supportFragmentManager
-//                    .beginTransaction()
-//                    .replace(R.id.container, partyListFragment)
-//                    .commit()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, foundListFragment)
+                        .commit()
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.action_profile -> {

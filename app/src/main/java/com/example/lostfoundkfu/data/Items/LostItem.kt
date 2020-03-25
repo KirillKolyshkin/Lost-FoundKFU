@@ -6,5 +6,6 @@ data class LostItem(
     val name: String = "",
     val place: String = "",
     val date: Date = Date(),
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val isFound: Boolean = false
 )
