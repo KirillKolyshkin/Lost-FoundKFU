@@ -1,7 +1,13 @@
 package com.example.lostfoundkfu.data.db
 
 import com.example.lostfoundkfu.data.Items.LostItem
+import com.example.lostfoundkfu.data.user.User
+import com.example.lostfoundkfu.data.user.UserResponse
+import com.google.gson.Gson
+import com.vk.sdk.api.VKRequest
+import com.vk.sdk.api.VKResponse
 import io.reactivex.Maybe
+import io.reactivex.rxkotlin.subscribeBy
 import java.util.*
 import kotlin.collections.ArrayList
 

@@ -7,6 +7,7 @@ import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.features.foundlist.FoundListFragment
 import com.example.lostfoundkfu.features.lostandfoundselect.LostAndFoundSelectFragment
 import com.example.lostfoundkfu.features.lostlist.LostListFragment
+import com.example.lostfoundkfu.features.myprofile.MyProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val lostAndFoundFragment = LostAndFoundSelectFragment.newInstance()
     private val lostListFragment = LostListFragment.newInstance()
     private val foundListFragment = FoundListFragment.newInstance()
+    private val profileFragment = MyProfileFragment.newInstance()
 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -41,10 +43,10 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.action_profile -> {
-                    /*supportFragmentManager
+                    supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.container, profileFragment)
-                        .commit()*/
+                        .commit()
                     return@OnNavigationItemSelectedListener true
                 }
             }
@@ -55,12 +57,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        navigation.selectedItemId = R.id.action_profile
-        /*if (savedInstanceState == null) {
+        navigation.selectedItemId = R.id.action_lost_and_found
+        if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, partyListFragment)
+                .replace(R.id.container, lostAndFoundFragment)
                 .commit()
-        }*/
+        }
     }
 }

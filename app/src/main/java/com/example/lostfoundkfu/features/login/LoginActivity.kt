@@ -42,6 +42,7 @@ class LoginActivity : MvpAppCompatActivity(), LoginView {
     }
 
     private fun enterApp(){
+        loginPresenter.setUser()
         startActivity(Intent(applicationContext, MainActivity::class.java))
         finish()
     }
