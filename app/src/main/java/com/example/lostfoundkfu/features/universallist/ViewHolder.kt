@@ -1,4 +1,4 @@
-package com.example.lostfoundkfu.features.foundlist
+package com.example.lostfoundkfu.features.universallist
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -7,13 +7,13 @@ import com.example.lostfoundkfu.data.Items.LostItem
 import kotlinx.android.synthetic.main.item_lost_found.view.*
 import java.text.SimpleDateFormat
 
-class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindViews(item: LostItem){
+class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun bindViews(item: LostItem) {
         var place = ""
         for (_place in item.place){
             place += " $_place"
         }
-        with(itemView){
+        with(itemView) {
             tv_item_name.text = item.name
             tv_place.text = place
             tv_date.text = SimpleDateFormat("dd/M/yyyy").format(item.date)
@@ -21,3 +21,4 @@ class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 }
+

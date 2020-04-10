@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.lostfoundkfu.R
+import com.example.lostfoundkfu.features.createlostobject.CreateLostObjectFragment
+import com.example.lostfoundkfu.features.mainscreen.MainActivity
 import kotlinx.android.synthetic.main.lost_and_found_select_fragment.*
 
 class LostAndFoundSelectFragment : Fragment() {
@@ -19,15 +21,15 @@ class LostAndFoundSelectFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_lost.setOnClickListener{
-
+        btn_lost.setOnClickListener {
+            (activity as MainActivity).openCreateNewLostObjectFragment()
         }
-        btn_found.setOnClickListener{
-
+        btn_found.setOnClickListener {
+            (activity as MainActivity).openCreateNewFoundObjectFragment()
         }
     }
 
-    companion object{
+    companion object {
         fun newInstance(): LostAndFoundSelectFragment =
             LostAndFoundSelectFragment()
     }

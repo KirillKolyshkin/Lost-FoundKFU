@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.user.User
 import com.example.lostfoundkfu.features.App
+import com.example.lostfoundkfu.features.mainscreen.MainActivity
+import com.example.lostfoundkfu.features.universallist.UseCases
 import kotlinx.android.synthetic.main.my_profile_fragment.*
 import javax.inject.Inject
 
@@ -64,13 +66,12 @@ class MyProfileFragment : MvpAppCompatFragment(), MyProfileView {
         context?.let { Glide.with(it).load(url).into(profile_image) }
     }
 
-    override fun openFoundList(userLink: String) {
-        TODO("Not yet implemented")
-    }
+    override fun openFoundList(userLink: String) =
+        (activity as MainActivity).openUniversalList(UseCases.MyFoundList, null, userLink)
 
-    override fun openLostList(userLink: String) {
-        TODO("Not yet implemented")
-    }
+
+    override fun openLostList(userLink: String) =
+        (activity as MainActivity).openUniversalList(UseCases.MyLostList, null, userLink)
 
     companion object {
         private const val NAME_FORMAT = "%s %s"
