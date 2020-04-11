@@ -7,6 +7,7 @@ import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.Items.LostItem
 import com.example.lostfoundkfu.features.createlostobject.CreateLostObjectFragment
 import com.example.lostfoundkfu.features.foundlist.FoundListFragment
+import com.example.lostfoundkfu.features.itemdetail.ItemDetailFragment
 import com.example.lostfoundkfu.features.lostandfoundselect.LostAndFoundSelectFragment
 import com.example.lostfoundkfu.features.lostlist.LostListFragment
 import com.example.lostfoundkfu.features.myprofile.MyProfileFragment
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, createLostObjectFragment)
+            .addToBackStack("newLostObject")
             .commit()
     }
 
@@ -70,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, createFoundObjectFragment)
+            .addToBackStack("newFoundObject")
             .commit()
     }
 
@@ -78,6 +81,16 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, supposedLostList)
+            .addToBackStack("universalList")
+            .commit()
+    }
+
+    fun openDetailFragment(item: LostItem, isMy: Boolean){
+        val itemDetailFragment = ItemDetailFragment.newInstance(item, isMy)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, itemDetailFragment)
+            .addToBackStack("details")
             .commit()
     }
 

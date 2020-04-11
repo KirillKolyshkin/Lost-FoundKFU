@@ -16,12 +16,4 @@ class MyProfilePresenter : MvpPresenter<MyProfileView>() {
         UserProvider.curUser?.screen_name?.let { viewState.openVK(it) }
     }
 
-    fun openLostList(){
-        UserProvider.curUser?.screen_name?.let { viewState.openLostList(it) }
-    }
-
-    fun openFoundList(){
-        UserProvider.curUser?.screen_name?.let { viewState.openFoundList(it) }
-    }
-
 }

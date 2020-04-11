@@ -26,10 +26,28 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_title"
+            android:id="@+id/ti_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/appbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp">
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:hint="Название"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ti_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ti_name"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp">
             <EditText

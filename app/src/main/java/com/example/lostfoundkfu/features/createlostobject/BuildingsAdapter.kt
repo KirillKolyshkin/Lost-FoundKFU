@@ -38,7 +38,7 @@ class BuildingsAdapter: RecyclerView.Adapter<BuildingsAdapter.BuildingViewHolder
         fun bindViews(user: Building) {
             with(itemView) {
                 tv_name.text = user.name
-                Glide.with(context).load(user.imageUrl).into(iv_user_icon)
+                Glide.with(context).load(user.image).into(iv_user_icon)
             }
         }
 

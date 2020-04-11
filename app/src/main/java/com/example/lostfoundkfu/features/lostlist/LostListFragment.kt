@@ -11,12 +11,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.Items.LostItem
+import com.example.lostfoundkfu.data.db.UserProvider
 import com.example.lostfoundkfu.features.App
 import com.example.lostfoundkfu.features.mainscreen.MainActivity
 import kotlinx.android.synthetic.main.lost_item_list_fragment.*
 import javax.inject.Inject
 
-class LostListFragment: MvpAppCompatFragment(),
+class LostListFragment : MvpAppCompatFragment(),
     LostListView,
     SwipeRefreshLayout.OnRefreshListener {
 
@@ -38,7 +39,11 @@ class LostListFragment: MvpAppCompatFragment(),
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.lost_item_list_fragment, container, false)
     }
@@ -60,7 +65,10 @@ class LostListFragment: MvpAppCompatFragment(),
     }
 
     private fun onItemClick(item: LostItem) {
-
+        if (UserProvider.curUser?.screen_name == item.userLink)
+            (activity as MainActivity).openDetailFragment(item, true)
+        else
+            (activity as MainActivity).openDetailFragment(item, false)
     }
 
     private fun initToolbar() {
@@ -72,7 +80,7 @@ class LostListFragment: MvpAppCompatFragment(),
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val activity = (activity as MainActivity)
         activity.menuInflater.inflate(R.menu.toolbar_items, menu)
-        val mSearch = menu?.findItem(R.id.action_search)
+        val mSearch = menu.findItem(R.id.action_search)
         val mSearchView = mSearch?.actionView as SearchView
         mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {

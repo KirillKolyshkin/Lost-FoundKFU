@@ -1,7 +1,9 @@
 package com.example.lostfoundkfu.data.Items
 
+import android.graphics.drawable.Drawable
+
 data class Building(
     val name: String?,
-    val imageUrl: String? = null,
+    val image: Drawable? = null,
     var flag: Boolean = false
 )

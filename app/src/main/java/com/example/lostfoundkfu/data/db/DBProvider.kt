@@ -24,11 +24,13 @@ class DBProvider {
             emitter.onSuccess(arrayList)
         }
 
+    fun deleteItem(item: LostItem) {}
+
     fun getSupposedLostList(item: LostItem): Maybe<ArrayList<LostItem>> =
         Maybe.create { emitter ->
             val list = ArrayList<LostItem>()
             for (e in 1..10) {
-                list.add(LostItem("TetItem", ArrayList()))
+                list.add(LostItem("TetItem", "", ArrayList()))
             }
             emitter.onSuccess(list)
         }
@@ -37,25 +39,25 @@ class DBProvider {
         Maybe.create { emitter ->
             val list = ArrayList<LostItem>()
             for (e in 1..10) {
-                list.add(LostItem("TetItem", ArrayList()))
+                list.add(LostItem("TetItem", "", ArrayList()))
             }
             emitter.onSuccess(list)
         }
 
     fun getMyLostList(userLink: String): Maybe<ArrayList<LostItem>> =
-        Maybe.create{ emitter ->
+        Maybe.create { emitter ->
             val list = ArrayList<LostItem>()
             for (i in 1..20) {
-                list.add(LostItem("Пельмеши", listOf("2йка"), Calendar.getInstance().time))
+                list.add(LostItem("Пельмеши", "", listOf("2йка"), Calendar.getInstance().time))
             }
             emitter.onSuccess(list)
         }
 
     fun getMyFoundList(userLink: String): Maybe<ArrayList<LostItem>> =
-        Maybe.create{ emitter ->
+        Maybe.create { emitter ->
             val list = ArrayList<LostItem>()
             for (i in 1..20) {
-                list.add(LostItem("Пельмеши", listOf("2йка"), Calendar.getInstance().time))
+                list.add(LostItem("Пельмеши", "", listOf("2йка"), Calendar.getInstance().time))
             }
             emitter.onSuccess(list)
         }
@@ -64,7 +66,7 @@ class DBProvider {
         Maybe.create { emitter ->
             val list = ArrayList<LostItem>()
             for (i in 1..20) {
-                list.add(LostItem("Пельмеши", listOf("2йка"), Calendar.getInstance().time))
+                list.add(LostItem("Пельмеши", "", listOf("2йка"), Calendar.getInstance().time))
             }
             emitter.onSuccess(list)
         }
@@ -77,8 +79,10 @@ class DBProvider {
                 list.add(
                     LostItem(
                         "Пельмеши",
+                        "Потеряли пельмеши, что тут сказать",
                         listOf("2йка"),
                         Calendar.getInstance().time,
+                        null,
                         null,
                         true
                     )
@@ -89,6 +93,7 @@ class DBProvider {
 
     fun addObject(
         name: String,
+        description: String,
         place: List<String>,
         date: Date,
         category: String?,

@@ -4,22 +4,35 @@ import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.lostfoundkfu.data.db.DBProvider
+import com.example.lostfoundkfu.features.foundlist.FoundListView
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import java.util.*
 
 @InjectViewState
-class CreateLostObjectPresenter(private val dbProvider: DBProvider): MvpPresenter<CreateLostObjectView>() {
+class CreateLostObjectPresenter(private val dbProvider: DBProvider) :
+    MvpPresenter<CreateLostObjectView>() {
+    private val compositeDisposable = CompositeDisposable()
 
-    fun getBuildings(){
+    fun getBuildings() {
         val disposable = dbProvider.getBuildings().subscribeBy {
             viewState.getBuildings(it)
         }
+        compositeDisposable.add(disposable)
     }
 
-    fun addObject(name: String,
-                  place: List<String>,
-                  date: Date,
-                  category: String?,
-                  image: Bitmap?,
-                  isFound: Boolean) = dbProvider.addObject(name, place, date, category, image, isFound)
+    fun addObject(
+        name: String,
+        description: String,
+        place: List<String>,
+        date: Date,
+        category: String?,
+        image: Bitmap?,
+        isFound: Boolean
+    ) = dbProvider.addObject(name, description, place, date, category, image, isFound)
+
+    override fun destroyView(view: CreateLostObjectView?) {
+        super.destroyView(view)
+        compositeDisposable.clear()
+    }
 }

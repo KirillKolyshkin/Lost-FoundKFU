@@ -130,13 +130,18 @@ class CreateLostObjectFragment : MvpAppCompatFragment(), CreateLostObjectView,
             showDialog()
         }
         btn_accept.setOnClickListener {
-            val title = et_title.text.toString()
+            val name = et_name.text.toString()
+            val description = et_title.text.toString()
 
             val calendar = GregorianCalendar(dp.year, dp.month, dp.dayOfMonth)
             val date = calendar.time
 
-            if (title.isEmpty()) {
+            if (description.isEmpty()) {
                 ti_title.error = getString(R.string.error_title)
+                return@setOnClickListener
+            }
+            if (name.isEmpty()){
+                ti_name.error = getString(R.string.error_title)
                 return@setOnClickListener
             }
             var bitmap: Bitmap?
@@ -155,17 +160,17 @@ class CreateLostObjectFragment : MvpAppCompatFragment(), CreateLostObjectView,
                 }
                 val isLost = arguments?.getBoolean(IS_LOST)
                 if (isLost != null && isLost) {
-                    presenter.addObject(title, buildingsSelected, date, objectType, bitmap, false)
+                    presenter.addObject(name, description, buildingsSelected, date, objectType, bitmap, false)
                     (activity as MainActivity).openUniversalList(
                         UseCases.SupposedFoundList,
-                        LostItem(title, buildingsSelected, date, null, false),
+                        LostItem(name, description, buildingsSelected, date, null, null,false),
                         null
                     )
                 } else {
-                    presenter.addObject(title, buildingsSelected, date, objectType, bitmap, true)
+                    presenter.addObject(name, description, buildingsSelected, date, objectType, bitmap, true)
                     (activity as MainActivity).openUniversalList(
                         UseCases.SupposedLostList,
-                        LostItem(title, buildingsSelected, date, null, true),
+                        LostItem(name, description, buildingsSelected, date, null, null,true),
                         null
                     )
                 }
@@ -198,7 +203,7 @@ class CreateLostObjectFragment : MvpAppCompatFragment(), CreateLostObjectView,
     override fun getBuildings(list: ArrayList<BuildingWithoutFlag>) {
         val buildingsWithFlag = ArrayList<Building>()
         for (building in list)
-            buildingsWithFlag.add(Building(building.name, building.imageUrl, false))
+            buildingsWithFlag.add(Building(building.name, building.image, false))
         adapter.list = buildingsWithFlag
         adapter.notifyDataSetChanged()
     }

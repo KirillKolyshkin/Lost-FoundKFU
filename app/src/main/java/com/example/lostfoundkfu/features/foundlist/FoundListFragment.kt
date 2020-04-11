@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.Items.LostItem
+import com.example.lostfoundkfu.data.db.UserProvider
 import com.example.lostfoundkfu.features.App
 import com.example.lostfoundkfu.features.mainscreen.MainActivity
 import kotlinx.android.synthetic.main.found_item_list_fragment.*
@@ -60,7 +61,10 @@ class FoundListFragment: MvpAppCompatFragment(),
     }
 
     private fun onItemClick(item: LostItem) {
-
+        if (UserProvider.curUser?.screen_name == item.userLink)
+            (activity as MainActivity).openDetailFragment(item, true)
+        else
+            (activity as MainActivity).openDetailFragment(item, false)
     }
 
     private fun initToolbar() {

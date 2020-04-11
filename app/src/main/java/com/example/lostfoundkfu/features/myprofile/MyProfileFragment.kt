@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.example.lostfoundkfu.R
+import com.example.lostfoundkfu.data.db.UserProvider
 import com.example.lostfoundkfu.data.user.User
 import com.example.lostfoundkfu.features.App
 import com.example.lostfoundkfu.features.mainscreen.MainActivity
@@ -48,10 +49,14 @@ class MyProfileFragment : MvpAppCompatFragment(), MyProfileView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_vk.setOnClickListener { presenter.openVK() }
-        btn_my_found_list.setOnClickListener { presenter.openFoundList() }
-        btn_my_lost_list.setOnClickListener { presenter.openLostList() }
+        initClickListener()
     }
 
+    private fun initClickListener(){
+        val userLink = UserProvider.curUser?.screen_name!!
+        btn_my_found_list.setOnClickListener { openFoundList(userLink) }
+        btn_my_lost_list.setOnClickListener { openLostList(userLink) }
+    }
 
     override fun setUserInfo(user: User) {
         tv_name.text = NAME_FORMAT.format(user.first_name, user.last_name)
