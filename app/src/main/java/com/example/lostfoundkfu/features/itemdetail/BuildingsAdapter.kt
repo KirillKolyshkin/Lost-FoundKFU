@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.Items.BuildingWithoutFlag
-import kotlinx.android.synthetic.main.place_item.view.*
+import kotlinx.android.synthetic.main.item_building.view.*
 
 class BuildingsAdapter: RecyclerView.Adapter<BuildingsAdapter.BuildingViewHolder>() {
 
@@ -31,8 +31,8 @@ class BuildingsAdapter: RecyclerView.Adapter<BuildingsAdapter.BuildingViewHolder
     inner class BuildingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindViews(building: BuildingWithoutFlag) {
             with(itemView) {
-                tv_name.text = building.name
-                Glide.with(context).load(building.image).into(iv_user_icon)
+                tv_item_name.text = building.name
+                Glide.with(context).load(building.image).into(iv_item_icon)
             }
         }
 

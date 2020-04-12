@@ -1,19 +1,47 @@
 package com.example.lostfoundkfu.data.db
 
+import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.util.Log
+import androidx.constraintlayout.widget.Constraints
 import com.example.lostfoundkfu.data.Items.BuildingWithoutFlag
 import com.example.lostfoundkfu.data.Items.LostItem
-import com.example.lostfoundkfu.data.user.User
-import com.example.lostfoundkfu.data.user.UserResponse
-import com.google.gson.Gson
-import com.vk.sdk.api.VKRequest
-import com.vk.sdk.api.VKResponse
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import io.reactivex.Maybe
 import io.reactivex.rxkotlin.subscribeBy
+import java.io.ByteArrayOutputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
-class DBProvider {
+
+class DBProvider(
+    private val database: FirebaseFirestore,
+    private val sharedPreferences: SharedPreferences,
+    private val firebaseStorage: FirebaseStorage
+) {
+
+    fun addImageToStorage(name: String, bitmap: Bitmap, path: String): Maybe<String> {
+        var storageRef = firebaseStorage.reference
+        var imagesRef: StorageReference? = storageRef
+            .child("images")
+            .child(path)//"userImages"
+            .child("$name.jpg")
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos)
+        val data = baos.toByteArray()
+        return Maybe.create { emitter ->
+            var uploadTask = imagesRef?.putBytes(data)?.addOnSuccessListener {
+                imagesRef.downloadUrl.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        emitter
+                            .onSuccess(downloadUri.toString())
+                    }
+                }
+            }
+        }
+    }
 
     fun getBuildings(): Maybe<ArrayList<BuildingWithoutFlag>> =
         Maybe.create { emitter ->
@@ -24,72 +52,144 @@ class DBProvider {
             emitter.onSuccess(arrayList)
         }
 
-    fun deleteItem(item: LostItem) {}
 
     fun getSupposedLostList(item: LostItem): Maybe<ArrayList<LostItem>> =
         Maybe.create { emitter ->
-            val list = ArrayList<LostItem>()
-            for (e in 1..10) {
-                list.add(LostItem("TetItem", "", ArrayList()))
-            }
-            emitter.onSuccess(list)
+            database
+                .collection("items")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val list = ArrayList<LostItem>()
+                    val lowBound = item.date.time - (60000*60*24*7)
+                    val highBound = item.date.time + (60000*60*24*7)
+                    for (document in documentSnapshot) {
+                        val supposedItem = document.toObject(LostItem::class.java)
+                        if (!supposedItem.isFound
+                            && supposedItem.category == item.category
+                            && supposedItem.date.time in lowBound..highBound
+                        )
+                            list.add(supposedItem)
+                    }
+                    emitter.onSuccess(list)
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(Constraints.TAG, "Error getting documents: ", exception)
+                    emitter.onError(exception)
+                }
         }
 
     fun getSupposedFoundList(item: LostItem): Maybe<ArrayList<LostItem>> =
         Maybe.create { emitter ->
-            val list = ArrayList<LostItem>()
-            for (e in 1..10) {
-                list.add(LostItem("TetItem", "", ArrayList()))
-            }
-            emitter.onSuccess(list)
-        }
-
-    fun getMyLostList(userLink: String): Maybe<ArrayList<LostItem>> =
-        Maybe.create { emitter ->
-            val list = ArrayList<LostItem>()
-            for (i in 1..20) {
-                list.add(LostItem("Пельмеши", "", listOf("2йка"), Calendar.getInstance().time))
-            }
-            emitter.onSuccess(list)
-        }
-
-    fun getMyFoundList(userLink: String): Maybe<ArrayList<LostItem>> =
-        Maybe.create { emitter ->
-            val list = ArrayList<LostItem>()
-            for (i in 1..20) {
-                list.add(LostItem("Пельмеши", "", listOf("2йка"), Calendar.getInstance().time))
-            }
-            emitter.onSuccess(list)
+            database
+                .collection("items")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val list = ArrayList<LostItem>()
+                    val lowBound = item.date.time - (60000*60*24*7)
+                    val highBound = item.date.time + (60000*60*24*7)
+                    for (document in documentSnapshot) {
+                        val supposedItem = document.toObject(LostItem::class.java)
+                        if (supposedItem.isFound
+                            && supposedItem.category == item.category
+                            && supposedItem.date.time in lowBound..highBound
+                        )
+                            list.add(supposedItem)
+                    }
+                    emitter.onSuccess(list)
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(Constraints.TAG, "Error getting documents: ", exception)
+                    emitter.onError(exception)
+                }
         }
 
     fun getTestLostList(): Maybe<ArrayList<LostItem>> =
         Maybe.create { emitter ->
-            val list = ArrayList<LostItem>()
-            for (i in 1..20) {
-                list.add(LostItem("Пельмеши", "", listOf("2йка"), Calendar.getInstance().time))
-            }
-            emitter.onSuccess(list)
+            database
+                .collection("items")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val list = ArrayList<LostItem>()
+                    for (document in documentSnapshot) {
+                        val supposedItem = document.toObject(LostItem::class.java)
+                        if (!supposedItem.isFound)
+                            list.add(supposedItem)
+                    }
+                    emitter.onSuccess(list)
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(Constraints.TAG, "Error getting documents: ", exception)
+                    emitter.onError(exception)
+                }
         }
 
 
     fun getTestFoundList(): Maybe<ArrayList<LostItem>> =
         Maybe.create { emitter ->
-            val list = ArrayList<LostItem>()
-            for (i in 1..20) {
-                list.add(
-                    LostItem(
-                        "Пельмеши",
-                        "Потеряли пельмеши, что тут сказать",
-                        listOf("2йка"),
-                        Calendar.getInstance().time,
-                        null,
-                        null,
-                        true
-                    )
-                )
-            }
-            emitter.onSuccess(list)
+            database
+                .collection("items")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val list = ArrayList<LostItem>()
+                    for (document in documentSnapshot) {
+                        val supposedItem = document.toObject(LostItem::class.java)
+                        if (supposedItem.isFound)
+                            list.add(supposedItem)
+                    }
+                    emitter.onSuccess(list)
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(Constraints.TAG, "Error getting documents: ", exception)
+                    emitter.onError(exception)
+                }
         }
+
+    fun getMyLostList(userLink: String): Maybe<ArrayList<LostItem>> =
+        Maybe.create { emitter ->
+            database
+                .collection("items")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val list = ArrayList<LostItem>()
+                    for (document in documentSnapshot) {
+                        val supposedItem = document.toObject(LostItem::class.java)
+                        if (supposedItem.userLink == userLink && !supposedItem.isFound)
+                            list.add(supposedItem)
+                    }
+                    emitter.onSuccess(list)
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(Constraints.TAG, "Error getting documents: ", exception)
+                    emitter.onError(exception)
+                }
+        }
+
+    fun getMyFoundList(userLink: String): Maybe<ArrayList<LostItem>> =
+        Maybe.create { emitter ->
+            database
+                .collection("items")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val list = ArrayList<LostItem>()
+                    for (document in documentSnapshot) {
+                        val supposedItem = document.toObject(LostItem::class.java)
+                        if (supposedItem.userLink == userLink && supposedItem.isFound)
+                            list.add(supposedItem)
+                    }
+                    emitter.onSuccess(list)
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(Constraints.TAG, "Error getting documents: ", exception)
+                    emitter.onError(exception)
+                }
+        }
+
+    fun deleteItem(item: LostItem) {
+        database
+            .collection("items")
+            .document(item.userLink + item.name)
+            .delete()
+    }
 
     fun addObject(
         name: String,
@@ -100,6 +200,26 @@ class DBProvider {
         image: Bitmap?,
         isFound: Boolean
     ) {
-
+        val curUser = UserProvider.curUser!!
+        if (image != null) {
+            val disposable =
+                addImageToStorage(curUser.screen_name, image, "ItemPhoto").subscribeBy {
+                    val item =
+                        LostItem(
+                            name,
+                            description,
+                            place,
+                            date,
+                            it,
+                            curUser.screen_name,
+                            isFound,
+                            category
+                        )
+                    database
+                        .collection("items")
+                        .document(curUser.screen_name + name)
+                        .set(item)
+                }
+        }
     }
 }

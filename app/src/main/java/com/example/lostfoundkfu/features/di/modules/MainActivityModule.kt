@@ -1,5 +1,6 @@
 package com.example.lostfoundkfu.features.di.modules
 
+import android.content.SharedPreferences
 import com.example.lostfoundkfu.data.db.DBProvider
 import com.example.lostfoundkfu.data.db.UserProvider
 import com.example.lostfoundkfu.features.createlostobject.CreateLostObjectPresenter
@@ -8,6 +9,8 @@ import com.example.lostfoundkfu.features.itemdetail.ItemDetailPresenter
 import com.example.lostfoundkfu.features.lostlist.LostListPresenter
 import com.example.lostfoundkfu.features.myprofile.MyProfilePresenter
 import com.example.lostfoundkfu.features.universallist.UniversalListPresenter
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 
@@ -15,7 +18,11 @@ import dagger.Provides
 class MainActivityModule {
 
     @Provides
-    fun provideDBProvider() = DBProvider()
+    fun provideDBProvider(
+        firebaseFirestore: FirebaseFirestore,
+        sharedPreferences: SharedPreferences,
+        firebaseStorage: FirebaseStorage
+    ) = DBProvider(firebaseFirestore, sharedPreferences, firebaseStorage)
 
     @Provides
     fun providesUserProvider(): UserProvider = UserProvider()
@@ -30,11 +37,14 @@ class MainActivityModule {
     fun provideMyProfilePresenter(): MyProfilePresenter = MyProfilePresenter()
 
     @Provides
-    fun provideCreateLostObjectPresnter(provider: DBProvider): CreateLostObjectPresenter = CreateLostObjectPresenter(provider)
+    fun provideCreateLostObjectPresnter(provider: DBProvider): CreateLostObjectPresenter =
+        CreateLostObjectPresenter(provider)
 
     @Provides
-    fun provideUniversalListPresenter(provider: DBProvider): UniversalListPresenter = UniversalListPresenter(provider)
+    fun provideUniversalListPresenter(provider: DBProvider): UniversalListPresenter =
+        UniversalListPresenter(provider)
 
     @Provides
-    fun provideItemDetailFragment(provider: DBProvider): ItemDetailPresenter = ItemDetailPresenter(provider)
+    fun provideItemDetailFragment(provider: DBProvider): ItemDetailPresenter =
+        ItemDetailPresenter(provider)
 }

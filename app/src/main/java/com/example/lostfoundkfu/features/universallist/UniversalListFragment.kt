@@ -63,6 +63,8 @@ class UniversalListFragment :
         val item = arguments?.getSerializable(ITEM) as LostItem?
         val userLink = arguments?.getString(USER_LINK)
         val case = arguments?.getInt(USE_CASE)
+        recycler_view.adapter = adapter
+        recycler_view.layoutManager = LinearLayoutManager(context)
         if (case != null) {
             when (case) {
                 0 -> userLink?.let{ presenter.getMyLostList(it)}
@@ -71,8 +73,6 @@ class UniversalListFragment :
                 3 -> item?.let { presenter.getSupposedFoundList(it) }
             }
         }
-        recycler_view.adapter = adapter
-        recycler_view.layoutManager = LinearLayoutManager(context)
         presenter.setList()
     }
 
@@ -128,6 +128,7 @@ class UniversalListFragment :
 
     override fun getList(items: ArrayList<LostItem>) {
         dataList = items
+        showList()
     }
 
     companion object {

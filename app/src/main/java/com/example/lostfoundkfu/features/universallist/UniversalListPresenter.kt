@@ -34,7 +34,7 @@ class UniversalListPresenter(private val dbProvider: DBProvider) :
     }
 
     fun getMyFoundList(userLink: String) {
-        val disposable = dbProvider.getMyLostList(userLink).subscribeBy {
+        val disposable = dbProvider.getMyFoundList(userLink).subscribeBy {
             viewState.getList(it)
         }
         compositeDisposable.add(disposable)

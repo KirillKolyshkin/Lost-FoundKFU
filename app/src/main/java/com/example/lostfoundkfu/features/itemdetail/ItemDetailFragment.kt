@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.bumptech.glide.Glide
 import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.Items.BuildingWithoutFlag
 import com.example.lostfoundkfu.data.Items.LostItem
@@ -81,6 +82,7 @@ class ItemDetailFragment : MvpAppCompatFragment(),
         tv_item_name.text = item.name
         tv_description.text = item.description
         tv_date.text = SimpleDateFormat("dd/M/yyyy").format(item.date)
+        Glide.with(context!!).load(item.imageUrl).into(iv_photo)
         getBuildings(mapToBuildings(item.place))
         if (item.place.count() == 0)
             tv_buildings_list.text = ""
@@ -113,7 +115,10 @@ class ItemDetailFragment : MvpAppCompatFragment(),
         val item = arguments?.getSerializable(ITEM) as LostItem
         val isMy = arguments?.getBoolean(IS_MY)
         if (isMy != null && isMy) {
-            btn_debt.setOnClickListener { }
+            btn_debt.setOnClickListener {
+                presenter.deleteItem(item)
+                activity?.onBackPressed()
+            }
         } else {
             btn_debt.setOnClickListener {
                 val browserIntent =

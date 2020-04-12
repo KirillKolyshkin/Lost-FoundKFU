@@ -163,14 +163,14 @@ class CreateLostObjectFragment : MvpAppCompatFragment(), CreateLostObjectView,
                     presenter.addObject(name, description, buildingsSelected, date, objectType, bitmap, false)
                     (activity as MainActivity).openUniversalList(
                         UseCases.SupposedFoundList,
-                        LostItem(name, description, buildingsSelected, date, null, null,false),
+                        LostItem(name, description, buildingsSelected, date, null, null,false, objectType),
                         null
                     )
                 } else {
                     presenter.addObject(name, description, buildingsSelected, date, objectType, bitmap, true)
                     (activity as MainActivity).openUniversalList(
                         UseCases.SupposedLostList,
-                        LostItem(name, description, buildingsSelected, date, null, null,true),
+                        LostItem(name, description, buildingsSelected, date, null, null,true, objectType),
                         null
                     )
                 }
