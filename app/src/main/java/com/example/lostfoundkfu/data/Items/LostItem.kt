@@ -11,7 +11,7 @@ data class LostItem(
     val date: Date = Date(),
     val imageUrl: String? = null,
     val userLink: String? = null,
-    val isFound: Boolean = false,
+    val found: Boolean = false,
     val category: String? = null
 ) : Serializable
 

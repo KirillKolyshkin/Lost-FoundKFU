@@ -59,7 +59,7 @@
     <Button
         android:id="@+id/btn_my_found_list"
         style="@style/ButtonMain"
-        android:layout_width="220dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="8dp"
@@ -67,15 +67,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorAccent"
-        android:text="my Found list"
+        android:text="Мой Лист Находок"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
 
     <Button
         android:id="@+id/btn_my_lost_list"
         style="@style/ButtonMain"
-        android:layout_width="220dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="8dp"
@@ -83,8 +83,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorAccent"
-        android:text="my lost list"
+        android:text="Мой Лист Потерь"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>

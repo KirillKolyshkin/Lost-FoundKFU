@@ -16,7 +16,6 @@ class UserProvider {
                 super.onComplete(response)
                 val user = Gson().fromJson(response?.responseString, UserResponse::class.java)
                 curUser = user.response
-                //val disposable = register().subscribeBy(onSuccess = {}, onError = {}) TODO add user to Firebase
             }
         }
         )

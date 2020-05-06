@@ -29,6 +29,9 @@ android {
 
 dependencies {
 
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     //moxy
     implementation 'tech.schoolhelper:moxy-x-androidx:1.5.6'
     kapt 'tech.schoolhelper:moxy-x-compiler:1.5.6'

@@ -53,7 +53,7 @@
         android:text="Нашел"
         android:textSize="20sp"
         android:textColor="@color/colorWhite"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

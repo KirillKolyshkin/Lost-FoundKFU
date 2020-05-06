@@ -38,14 +38,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_lost_list -> {
                     supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.container, lostListFragment)
+                        .replace(R.id.container, foundListFragment)
                         .commit()
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.action_found_list -> {
                     supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.container, foundListFragment)
+                        .replace(R.id.container, lostListFragment)
                         .commit()
                     return@OnNavigationItemSelectedListener true
                 }

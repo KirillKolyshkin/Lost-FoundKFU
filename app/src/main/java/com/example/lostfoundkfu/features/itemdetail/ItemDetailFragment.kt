@@ -1,7 +1,6 @@
 package com.example.lostfoundkfu.features.itemdetail
 
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -61,7 +60,6 @@ class ItemDetailFragment : MvpAppCompatFragment(),
         )
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(context)
-        //presenter.getBuildings()
         initView()
         initToolbar()
         initClickListeners()
@@ -102,10 +100,44 @@ class ItemDetailFragment : MvpAppCompatFragment(),
         val newlist = ArrayList<BuildingWithoutFlag>()
         for (item in list) {
             when (item) {
-                "Двойка" -> newlist.add(
+                "Учебное здание №1" -> newlist.add(
                     BuildingWithoutFlag(item,
-                        context?.let { ContextCompat.getDrawable(it, R.drawable.ic_bag) })
+                        context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_first_building) })
                 )
+                "Учебное здание №2" -> {newlist.add(
+                    BuildingWithoutFlag(item,
+                    context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_second_building) }))
+                }
+                "Учебное здание №12" -> {
+                    newlist.add(
+                    BuildingWithoutFlag(item,
+                        context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_twelve_building) }))
+                }
+                "Учебное здание №19" -> {
+                    newlist.add(
+                    BuildingWithoutFlag(item,
+                        context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_nineteen_building) }))
+                }
+                "Общежитие №8" -> {
+                    newlist.add(
+                    BuildingWithoutFlag(item,
+                        context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_eight_ob) }))
+                }
+                "Общежитие №9" -> {
+                    newlist.add(
+                    BuildingWithoutFlag(item,
+                        context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_nine_ob) }))
+                }
+                "Деревня Универсиады" -> {
+                    newlist.add(
+                    BuildingWithoutFlag(item,
+                        context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_university_village) }))
+                }
+                "Уникс" -> {
+                    newlist.add(
+                    BuildingWithoutFlag(item,
+                        context?.let { ContextCompat.getDrawable(it, R.mipmap.ic_uniks) }))
+                }
             }
         }
         return newlist

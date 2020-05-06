@@ -1,9 +1,11 @@
 package com.example.lostfoundkfu.data.db
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.constraintlayout.widget.Constraints
+import com.example.lostfoundkfu.R
 import com.example.lostfoundkfu.data.Items.BuildingWithoutFlag
 import com.example.lostfoundkfu.data.Items.LostItem
 import com.google.firebase.firestore.FirebaseFirestore
@@ -43,12 +45,17 @@ class DBProvider(
         }
     }
 
-    fun getBuildings(): Maybe<ArrayList<BuildingWithoutFlag>> =
+    fun getBuildings(context: Context): Maybe<ArrayList<BuildingWithoutFlag>> =
         Maybe.create { emitter ->
             val arrayList = ArrayList<BuildingWithoutFlag>()
-            for (e in 1..10) {
-                arrayList.add(BuildingWithoutFlag("Двойка", null))
-            }
+            arrayList.add(BuildingWithoutFlag("Учебное здание №1", context.getDrawable(R.mipmap.ic_first_building)))
+            arrayList.add(BuildingWithoutFlag("Учебное здание №2", context.getDrawable(R.mipmap.ic_second_building)))
+            arrayList.add(BuildingWithoutFlag("Учебное здание №12", context.getDrawable( R.mipmap.ic_twelve_building)))
+            arrayList.add(BuildingWithoutFlag("Учебное здание №19", context.getDrawable( R.mipmap.ic_nineteen_building)))
+            arrayList.add(BuildingWithoutFlag("Общежитие №8", context.getDrawable( R.mipmap.ic_eight_ob)))
+            arrayList.add(BuildingWithoutFlag("Общежитие №9", context.getDrawable( R.mipmap.ic_nine_ob)))
+            arrayList.add(BuildingWithoutFlag("Деревня Универсиады", context.getDrawable( R.mipmap.ic_university_village)))
+            arrayList.add(BuildingWithoutFlag("Уникс", context.getDrawable( R.mipmap.ic_uniks)))
             emitter.onSuccess(arrayList)
         }
 
@@ -60,11 +67,11 @@ class DBProvider(
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val list = ArrayList<LostItem>()
-                    val lowBound = item.date.time - (60000*60*24*7)
-                    val highBound = item.date.time + (60000*60*24*7)
+                    val lowBound = item.date.time - (60000 * 60 * 24 * 7)
+                    val highBound = item.date.time + (60000 * 60 * 24 * 7)
                     for (document in documentSnapshot) {
                         val supposedItem = document.toObject(LostItem::class.java)
-                        if (!supposedItem.isFound
+                        if (!supposedItem.found
                             && supposedItem.category == item.category
                             && supposedItem.date.time in lowBound..highBound
                         )
@@ -85,11 +92,11 @@ class DBProvider(
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val list = ArrayList<LostItem>()
-                    val lowBound = item.date.time - (60000*60*24*7)
-                    val highBound = item.date.time + (60000*60*24*7)
+                    val lowBound = item.date.time - (60000 * 60 * 24 * 7)
+                    val highBound = item.date.time + (60000 * 60 * 24 * 7)
                     for (document in documentSnapshot) {
                         val supposedItem = document.toObject(LostItem::class.java)
-                        if (supposedItem.isFound
+                        if (supposedItem.found
                             && supposedItem.category == item.category
                             && supposedItem.date.time in lowBound..highBound
                         )
@@ -112,7 +119,7 @@ class DBProvider(
                     val list = ArrayList<LostItem>()
                     for (document in documentSnapshot) {
                         val supposedItem = document.toObject(LostItem::class.java)
-                        if (!supposedItem.isFound)
+                        if (!supposedItem.found)
                             list.add(supposedItem)
                     }
                     emitter.onSuccess(list)
@@ -133,7 +140,7 @@ class DBProvider(
                     val list = ArrayList<LostItem>()
                     for (document in documentSnapshot) {
                         val supposedItem = document.toObject(LostItem::class.java)
-                        if (supposedItem.isFound)
+                        if (supposedItem.found)
                             list.add(supposedItem)
                     }
                     emitter.onSuccess(list)
@@ -153,7 +160,7 @@ class DBProvider(
                     val list = ArrayList<LostItem>()
                     for (document in documentSnapshot) {
                         val supposedItem = document.toObject(LostItem::class.java)
-                        if (supposedItem.userLink == userLink && !supposedItem.isFound)
+                        if (supposedItem.userLink == userLink && !supposedItem.found)
                             list.add(supposedItem)
                     }
                     emitter.onSuccess(list)
@@ -173,7 +180,7 @@ class DBProvider(
                     val list = ArrayList<LostItem>()
                     for (document in documentSnapshot) {
                         val supposedItem = document.toObject(LostItem::class.java)
-                        if (supposedItem.userLink == userLink && supposedItem.isFound)
+                        if (supposedItem.userLink == userLink && supposedItem.found)
                             list.add(supposedItem)
                     }
                     emitter.onSuccess(list)

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Lost&amp;FoundKFU</string>
-    <string name="lostfound">потеря/находка</string>
+    <string name="lostfound">создание</string>
     <string name="lost_list">лист потерь</string>
     <string name="find_list">лист находок</string>
     <string name="profile">профиль</string>
@@ -11,6 +11,7 @@
     <string name="photo_discription">Добавте фотографию пропажи</string>
     <integer name="com_vk_sdk_AppId">7355851</integer>
     <string name="choose_type">Выберите тип</string>
-    <string name="error_title">Enter title!</string>
-    <string name="select_picture">Select Picture</string>
+    <string name="error_title">Введите текст!</string>
+    <string name="select_picture">Выберите Картинку</string>
+    <string name="public_string">опубликовать</string>
 </resources>

@@ -55,6 +55,7 @@ class FoundListFragment: MvpAppCompatFragment(),
         recycler_view.adapter = foundItemListAdapter
         recycler_view.layoutManager = LinearLayoutManager(context)
         foundItemListPresenter.setFoundList()
+        btn_add.setOnClickListener { (activity as MainActivity).openCreateNewFoundObjectFragment() }
         swipe_container.setColorSchemeResources(R.color.colorAccent)
         swipe_container.setOnRefreshListener(this)
         initToolbar()

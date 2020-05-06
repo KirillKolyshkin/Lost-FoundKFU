@@ -59,6 +59,7 @@ class LostListFragment : MvpAppCompatFragment(),
         recycler_view.adapter = lostItemListAdapter
         recycler_view.layoutManager = LinearLayoutManager(context)
         lostItemListPresenter.setLostList()
+        btn_add.setOnClickListener { (activity as MainActivity).openCreateNewLostObjectFragment() }
         swipe_container.setColorSchemeResources(R.color.colorAccent)
         swipe_container.setOnRefreshListener(this)
         initToolbar()

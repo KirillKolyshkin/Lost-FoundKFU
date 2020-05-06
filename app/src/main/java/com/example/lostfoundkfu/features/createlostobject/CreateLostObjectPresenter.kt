@@ -1,5 +1,6 @@
 package com.example.lostfoundkfu.features.createlostobject
 
+import android.content.Context
 import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -14,8 +15,8 @@ class CreateLostObjectPresenter(private val dbProvider: DBProvider) :
     MvpPresenter<CreateLostObjectView>() {
     private val compositeDisposable = CompositeDisposable()
 
-    fun getBuildings() {
-        val disposable = dbProvider.getBuildings().subscribeBy {
+    fun getBuildings(context: Context) {
+        val disposable = dbProvider.getBuildings(context).subscribeBy {
             viewState.getBuildings(it)
         }
         compositeDisposable.add(disposable)

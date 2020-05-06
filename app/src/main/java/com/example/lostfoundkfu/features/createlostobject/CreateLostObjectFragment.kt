@@ -37,7 +37,7 @@ import kotlin.collections.ArrayList
 class CreateLostObjectFragment : MvpAppCompatFragment(), CreateLostObjectView,
     AdapterView.OnItemSelectedListener {
 
-    var list_of_items = arrayOf("Item 1", "Item 2", "Item 3")
+    var list_of_items = arrayOf("Эл. Техника", "Одежда", "Бижутерия", "Учебники", "Прочее")
     var objectType: String? = null
 
     @Inject
@@ -83,7 +83,7 @@ class CreateLostObjectFragment : MvpAppCompatFragment(), CreateLostObjectView,
                 list_of_items
             )
         }
-        presenter.getBuildings()
+        presenter.getBuildings(context!!)
         initToolbar()
         initClickListeners()
         initTextListeners()
@@ -162,14 +162,14 @@ class CreateLostObjectFragment : MvpAppCompatFragment(), CreateLostObjectView,
                 if (isLost != null && isLost) {
                     presenter.addObject(name, description, buildingsSelected, date, objectType, bitmap, false)
                     (activity as MainActivity).openUniversalList(
-                        UseCases.SupposedFoundList,
+                        UseCases.SupposedLostList,
                         LostItem(name, description, buildingsSelected, date, null, null,false, objectType),
                         null
                     )
                 } else {
                     presenter.addObject(name, description, buildingsSelected, date, objectType, bitmap, true)
                     (activity as MainActivity).openUniversalList(
-                        UseCases.SupposedLostList,
+                        UseCases.SupposedFoundList,
                         LostItem(name, description, buildingsSelected, date, null, null,true, objectType),
                         null
                     )
